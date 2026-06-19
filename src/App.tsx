@@ -1,4 +1,4 @@
-import { createElement, useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
+import { createElement, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
   ArrowRight,
@@ -148,7 +148,7 @@ const proofCards: Array<{
     page: "education",
     label: "Graduate focus",
     title: "MS Computer Science at Central Michigan University",
-    detail: "Includes GPA, coursework, Azure credentials, Linux, ethical hacking, and Agile learning.",
+    detail: "Includes GPA, degree history, Azure credentials, Linux, ethical hacking, and Agile learning.",
     icon: GraduationCap,
   },
   {
@@ -518,16 +518,6 @@ function projectLinks(project: Project) {
   return project.repo ? [{ label: "Repository", href: project.repo }] : [];
 }
 
-function educationCoursework(coursework?: string) {
-  return coursework
-    ? coursework
-        .replace(/\.$/, "")
-        .split(",")
-        .map((item) => item.trim())
-        .filter(Boolean)
-    : [];
-}
-
 function opensNewTab(href: string) {
   return href.startsWith("http");
 }
@@ -602,7 +592,7 @@ function App() {
           {renderPage(page, navigateTo, () => setIsResumeOpen(true), selectedSkillSlug)}
         </motion.div>
       </AnimatePresence>
-      <Footer onNavigate={navigateTo} />
+      {page === "projects" ? null : <Footer onNavigate={navigateTo} />}
       <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
     </main>
   );
@@ -859,7 +849,7 @@ function ProjectSystemVisual({ onNavigate }: { onNavigate: NavigateHandler }) {
       page: "education",
       label: "Education",
       value: "MS + certs",
-      detail: "GPA, graduate coursework, Azure credentials, Linux, Agile, security.",
+      detail: "Graduate degree, bachelor degree, Azure credentials, Linux, Agile, security.",
       icon: GraduationCap,
     },
   ];
@@ -1209,50 +1199,140 @@ function ExperiencePage() {
   );
 }
 
+function ProjectSummaryButton({
+  project,
+  isActive,
+  onSelect,
+  buttonRef,
+}: {
+  project: Project;
+  isActive: boolean;
+  onSelect: () => void;
+  buttonRef?: (element: HTMLButtonElement | null) => void;
+}) {
+  return (
+    <motion.button
+      type="button"
+      ref={buttonRef}
+      layout
+      animate={{ opacity: isActive ? 1 : 0.74, scale: isActive ? 1 : 0.97 }}
+      whileHover={{ opacity: 1, y: -2 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ duration: 0.22, ease: "easeOut" }}
+      className={`relative h-[218px] w-full snap-center overflow-hidden rounded-lg border p-5 text-left transition ${
+        isActive ? "border-teal-700 bg-white shadow-md ring-2 ring-teal-700/10" : "border-neutral-200 bg-white/80 hover:border-neutral-400"
+      }`}
+      onClick={onSelect}
+      aria-expanded={isActive}
+    >
+      <span className={`absolute inset-y-4 left-0 w-1 rounded-r-full transition ${isActive ? "bg-teal-700 opacity-100" : "bg-transparent opacity-0"}`} aria-hidden="true" />
+      <span className="flex items-start gap-3">
+        <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-teal-700/10 text-teal-800">
+          <IconGlyph icon={iconForProject(project.id)} size={19} />
+        </span>
+        <span>
+          <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">{project.eyebrow}</span>
+          <span className="mt-2 block overflow-hidden text-base font-semibold leading-6 text-neutral-950 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]">{project.title}</span>
+        </span>
+      </span>
+      <span className="mt-4 block overflow-hidden text-sm leading-6 text-neutral-600 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:4]">{project.summary}</span>
+    </motion.button>
+  );
+}
+
 function ProjectsPage() {
   const [activeProjectId, setActiveProjectId] = useState(featuredProjects[0]?.id ?? "");
+  const [expandedProjectId, setExpandedProjectId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<ProjectTab>("overview");
+  const projectButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const projectRailRef = useRef<HTMLDivElement | null>(null);
   const activeProject = featuredProjects.find((project) => project.id === activeProjectId) ?? featuredProjects[0];
 
+  useEffect(() => {
+    if (!window.matchMedia("(min-width: 1024px)").matches) {
+      return;
+    }
+
+    const rail = projectRailRef.current;
+    const selectedButton = projectButtonRefs.current[activeProjectId];
+
+    if (!rail || !selectedButton) {
+      return;
+    }
+
+    const centeredTop = selectedButton.offsetTop - (rail.clientHeight - selectedButton.clientHeight) / 2;
+    rail.scrollTo({
+      top: Math.max(centeredTop, 0),
+      behavior: "smooth",
+    });
+  }, [activeProjectId]);
+
+  function selectDesktopProject(projectId: string) {
+    setActiveProjectId(projectId);
+    setActiveTab("overview");
+  }
+
+  function selectMobileProject(projectId: string) {
+    setActiveProjectId(projectId);
+    setActiveTab("overview");
+    setExpandedProjectId((currentProjectId) => (currentProjectId === projectId ? null : projectId));
+  }
+
   return (
-    <section className="section-shell pb-16">
+    <section className="section-shell pb-16 lg:flex lg:h-[calc(100vh-68px)] lg:flex-col lg:overflow-hidden lg:py-6">
       <PageIntro
         eyebrow="Projects"
         title="Projects"
       />
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[0.38fr_0.62fr]">
-        <div className="space-y-3">
-          {featuredProjects.map((project) => {
-            const ProjectIcon = iconForProject(project.id);
-            return (
-              <button
-                key={project.id}
-                type="button"
-                className={`w-full rounded-lg border p-4 text-left transition ${
-                  activeProject.id === project.id ? "border-teal-700 bg-white shadow-md" : "border-neutral-200 bg-white/80 hover:border-neutral-400"
-                }`}
-                onClick={() => {
-                  setActiveProjectId(project.id);
-                  setActiveTab("overview");
-                }}
-              >
-                <span className="flex items-start gap-3">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-teal-700/10 text-teal-800">
-                    <ProjectIcon size={19} />
-                  </span>
-                  <span>
-                    <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">{project.eyebrow}</span>
-                    <span className="mt-2 block text-base font-semibold text-neutral-950">{project.title}</span>
-                  </span>
-                </span>
-                <span className="mt-3 block text-sm leading-6 text-neutral-600">{project.summary}</span>
-              </button>
-            );
-          })}
+      <div className="mt-6 hidden min-h-0 flex-1 gap-6 lg:grid lg:grid-cols-[0.36fr_minmax(0,0.64fr)]">
+        <div className="min-h-0">
+          <div ref={projectRailRef} className="project-carousel h-full snap-y snap-mandatory overflow-y-auto overscroll-contain scroll-smooth pr-1">
+            <div className="space-y-3 py-4">
+              {featuredProjects.map((project) => (
+                <ProjectSummaryButton
+                  key={project.id}
+                  project={project}
+                  isActive={activeProject.id === project.id}
+                  onSelect={() => selectDesktopProject(project.id)}
+                  buttonRef={(element) => {
+                    projectButtonRefs.current[project.id] = element;
+                  }}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
-        <ProjectCaseStudy project={activeProject} activeTab={activeTab} onTabChange={setActiveTab} />
+        <div className="project-detail-scroll min-h-0 overflow-y-auto overscroll-contain pr-1">
+          <ProjectCaseStudy project={activeProject} activeTab={activeTab} onTabChange={setActiveTab} />
+        </div>
+      </div>
+
+      <div className="mt-8 space-y-4 lg:hidden">
+        {featuredProjects.map((project) => {
+          const isExpanded = expandedProjectId === project.id;
+          return (
+            <div key={project.id}>
+              <ProjectSummaryButton project={project} isActive={isExpanded} onSelect={() => selectMobileProject(project.id)} />
+              <AnimatePresence initial={false}>
+                {isExpanded ? (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="mt-3">
+                      <ProjectCaseStudy project={project} activeTab={activeTab} onTabChange={setActiveTab} />
+                    </div>
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
@@ -1268,7 +1348,7 @@ function ProjectCaseStudy({
   onTabChange: (tab: ProjectTab) => void;
 }) {
   return (
-    <article className="rounded-lg border border-neutral-200 bg-white shadow-sm">
+    <article className="min-h-full rounded-lg border border-neutral-200 bg-white shadow-sm">
       <div className="border-b border-neutral-200 p-5">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
           <div className="flex gap-4">
@@ -1555,8 +1635,8 @@ function SkillsPage({ selectedSkillSlug, onNavigate }: { selectedSkillSlug: stri
 
       {selectedSkill ? <SkillEvidencePanel skill={selectedSkill} onNavigate={onNavigate} /> : null}
 
-      <div className="mt-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
-        <div className="relative w-full md:max-w-sm">
+      <div className="mt-8">
+        <div className="relative w-full">
           <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" size={18} />
           <input
             className="w-full rounded-md border border-neutral-300 bg-white py-3 pl-10 pr-3 text-sm outline-none transition focus:border-teal-700 focus:ring-2 focus:ring-teal-700/15"
@@ -1637,20 +1717,13 @@ function EducationPage() {
                 </div>
                 <p className="text-sm font-semibold text-neutral-500">{item.period}</p>
               </div>
-              {educationCoursework(item.coursework).length ? (
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {educationCoursework(item.coursework).map((course) => (
-                    <TechPill key={course}>{course}</TechPill>
-                  ))}
-                </div>
-              ) : null}
             </article>
           ))}
         </div>
 
         <div>
-          <h2 className="text-xl font-semibold text-neutral-950">Certifications and courses</h2>
-          <div className="mt-5 grid gap-3">
+          <h2 className="text-xl font-semibold text-neutral-950">Certifications</h2>
+          <div className="mt-5 grid max-h-[520px] gap-3 overflow-y-auto pr-1">
             {certifications.map((certification) => {
               const CertificationIcon = iconForCertification(certification);
               return (
@@ -1734,7 +1807,7 @@ function ResumeModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
             transition={{ duration: 0.18 }}
           >
             <div className="pointer-events-auto flex flex-wrap items-center justify-end gap-2 rounded-lg bg-neutral-950/90 p-2 text-white shadow-2xl backdrop-blur">
-              <a className="inline-flex items-center gap-2 rounded-md border border-teal-100 bg-teal-200 px-3 py-2 text-xs font-black text-neutral-950 shadow-[0_0_0_3px_rgba(45,212,191,0.28)] ring-2 ring-white/20 transition hover:bg-teal-100 sm:px-4 sm:py-3 sm:text-sm" href={profile.resume} download="Kunal_Maheshwari_Resume.pdf">
+              <a className="theme-inverse-cta inline-flex items-center gap-2 rounded-md border border-teal-100 bg-teal-200 px-3 py-2 text-xs font-black shadow-[0_0_0_3px_rgba(45,212,191,0.28)] ring-2 ring-white/20 transition hover:bg-teal-100 sm:px-4 sm:py-3 sm:text-sm" href={profile.resume} download="Kunal_Maheshwari_Resume.pdf">
                 <FileText size={18} />
                 <span>
                   Download<span className="hidden sm:inline"> Resume</span>
@@ -1790,7 +1863,7 @@ function ContactPage() {
               I am open to roles where backend engineering, cloud integrations, data systems, and AI platform work overlap.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a className="inline-flex items-center gap-2 rounded-md border border-teal-100 bg-teal-200 px-4 py-3 text-sm font-black text-neutral-950 shadow-[0_0_0_3px_rgba(45,212,191,0.18)] transition hover:bg-teal-100" href={`mailto:${profile.email}`}>
+              <a className="theme-inverse-cta inline-flex items-center gap-2 rounded-md border border-teal-100 bg-teal-200 px-4 py-3 text-sm font-black shadow-[0_0_0_3px_rgba(45,212,191,0.18)] transition hover:bg-teal-100" href={`mailto:${profile.email}`}>
                 <Mail size={18} />
                 Send Email
               </a>

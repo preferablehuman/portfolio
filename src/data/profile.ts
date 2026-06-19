@@ -801,7 +801,6 @@ export const education = [
     location: 'Mount Pleasant, MI, USA',
     period: 'Aug 2024 - Dec 2025',
     detail: 'GPA: 3.87 / 4.0',
-    coursework: 'Modern Databases, Pattern Recognition and Data Mining, Software and Data Modeling, Applied Data Engineering, Big Data Analytics, Cloud Computing, Analysis and Design of Algorithms.',
   },
   {
     school: 'Lovely Professional University',
@@ -819,13 +818,6 @@ export const certifications = [
   'Workshop on Ethical Hacking',
   'Introduction to Linux',
   'Agile Software Development',
-  'Modern Databases',
-  'Applied Data Engineering',
-  'Big Data Analytics',
-  'Cloud Computing',
-  'Pattern Recognition and Data Mining',
-  'Software and Data Modeling',
-  'Analysis and Design of Algorithms',
 ]
 
 export const moreProjects: MoreProject[] = [
