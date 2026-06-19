@@ -581,6 +581,7 @@ function App() {
       <ShellNav
         activePage={page}
         isOpen={isMenuOpen}
+        isResumeOpen={isResumeOpen}
         theme={theme}
         onMenuToggle={() => setIsMenuOpen((value) => !value)}
         onNavigate={navigateTo}
@@ -646,6 +647,7 @@ function RoutedLink({
 function ShellNav({
   activePage,
   isOpen,
+  isResumeOpen,
   theme,
   onMenuToggle,
   onNavigate,
@@ -654,6 +656,7 @@ function ShellNav({
 }: {
   activePage: PageId;
   isOpen: boolean;
+  isResumeOpen: boolean;
   theme: ThemeMode;
   onMenuToggle: () => void;
   onNavigate: NavigateHandler;
@@ -664,7 +667,7 @@ function ShellNav({
   const nextThemeLabel = theme === "light" ? "Dark" : "Light";
 
   return (
-    <header className="sticky top-0 z-50 border-b border-neutral-200 bg-[#f7f9f6]/90 backdrop-blur">
+    <header className={`sticky top-0 z-50 border-b border-neutral-200 bg-[#f7f9f6]/90 backdrop-blur transition-opacity duration-150 ${isResumeOpen ? "pointer-events-none opacity-0" : "opacity-100"}`}>
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3">
         <RoutedLink page="home" onNavigate={onNavigate} className="flex items-center gap-3 font-semibold tracking-tight text-neutral-950">
           <span className="grid size-10 place-items-center rounded-lg border border-neutral-900 bg-neutral-950 text-sm font-bold text-white">KM</span>
