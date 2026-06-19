@@ -1371,7 +1371,7 @@ function ProjectCaseStudy({
           </div>
         </div>
 
-        <div className="mt-5 flex gap-2 overflow-x-auto pb-1">
+        <div className="scroll-fade-x mt-5 flex gap-2 overflow-x-auto pb-1">
           {projectTabs.map((tab) => (
             <button
               key={tab.id}
@@ -1648,7 +1648,7 @@ function SkillsPage({ selectedSkillSlug, onNavigate }: { selectedSkillSlug: stri
         </div>
       </div>
 
-      <div className="mt-6 flex gap-2 overflow-x-auto pb-2">
+      <div className="scroll-fade-x mt-6 flex gap-2 overflow-x-auto pb-2">
         {categories.map((category) => (
           <button
             key={category}
@@ -1723,7 +1723,7 @@ function EducationPage() {
 
         <div>
           <h2 className="text-xl font-semibold text-neutral-950">Certifications</h2>
-          <div className="mt-5 grid max-h-[520px] gap-3 overflow-y-auto pr-1">
+          <div className="scroll-fade-bottom mt-5 grid max-h-[420px] gap-3 overflow-y-auto pr-1">
             {certifications.map((certification) => {
               const CertificationIcon = iconForCertification(certification);
               return (
@@ -1767,7 +1767,7 @@ function ResumeModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
       {isOpen ? (
         <>
           <motion.div
-            className="resume-modal-backdrop fixed inset-0 z-[100] overflow-y-auto px-3 py-4 backdrop-blur-md"
+            className="resume-modal-backdrop scroll-fade-y fixed inset-0 z-[100] overflow-y-auto px-3 py-4 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
