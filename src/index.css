@@ -90,7 +90,7 @@ input {
   }
 
   .section-title {
-    margin-top: 1rem;
+    margin-top: 0;
     max-width: 740px;
     font-size: clamp(2rem, 5vw, 3.6rem);
     line-height: 1.05;

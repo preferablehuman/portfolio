@@ -947,17 +947,14 @@ function ProjectSystemVisual({ onNavigate }: { onNavigate: NavigateHandler }) {
 }
 
 function PageIntro({
-  eyebrow,
   title,
   description,
 }: {
-  eyebrow: string;
   title: string;
   description?: string;
 }) {
   return (
     <div className="pt-14 md:pt-16">
-      <p className="eyebrow">{eyebrow}</p>
       <h1 className="section-title">{title}</h1>
       {description ? <p className="mt-5 max-w-3xl text-base leading-7 text-neutral-650 md:text-lg">{description}</p> : null}
     </div>
@@ -990,15 +987,15 @@ function SkillSearchPanel({ onNavigate }: { onNavigate: NavigateHandler }) {
 
   return (
     <div className="mt-8 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-950 p-5 text-white shadow-xl">
-      <div className="grid gap-5 lg:grid-cols-[0.45fr_0.55fr] lg:items-end">
-        <div className="flex gap-4">
+      <div className="grid gap-5 lg:grid-cols-[0.45fr_0.55fr] lg:items-center">
+        <div className="flex items-center gap-4">
           <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-teal-200 text-neutral-950">
             <UserRoundSearch size={22} />
           </span>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-200">Recruiter skill lookup</p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white">Search a skill and see where it was applied.</h2>
-            <p className="mt-2 text-sm leading-6 text-neutral-300">Open a focused skill page with experience years, matching roles, projects, and supporting evidence.</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-200">Skill lookup</p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white">Search a skill to see its relevant experience</h2>
+            {/* <p className="mt-2 text-sm leading-6 text-neutral-300">Open a focused skill page with experience years, matching roles, projects, and supporting evidence.</p> */}
           </div>
         </div>
 
@@ -1070,7 +1067,6 @@ function AboutPage({ onNavigate }: { onNavigate: NavigateHandler }) {
   return (
     <section className="section-shell pb-16">
       <PageIntro
-        eyebrow="About"
         title="About Kunal"
       />
       <SkillSearchPanel onNavigate={onNavigate} />
@@ -1145,7 +1141,6 @@ function ExperiencePage() {
   return (
     <section className="section-shell pb-16">
       <PageIntro
-        eyebrow="Experience"
         title="Experience"
       />
 
@@ -1306,7 +1301,6 @@ function ProjectsPage() {
   return (
     <section className="section-shell pb-16 lg:flex lg:h-[calc(100vh-68px)] lg:flex-col lg:overflow-hidden lg:py-6">
       <PageIntro
-        eyebrow="Projects"
         title="Projects"
       />
 
@@ -1654,7 +1648,6 @@ function SkillsPage({ selectedSkillSlug, onNavigate }: { selectedSkillSlug: stri
   return (
     <section className="section-shell pb-16">
       <PageIntro
-        eyebrow="Skills"
         title="Skills"
       />
 
@@ -1720,7 +1713,6 @@ function EducationPage() {
   return (
     <section className="section-shell pb-16">
       <PageIntro
-        eyebrow="Education and Certifications"
         title="Education"
       />
 
@@ -1887,7 +1879,6 @@ function ContactPage() {
   return (
     <section className="section-shell pb-16">
       <PageIntro
-        eyebrow="Contact"
         title="Contact"
       />
 
