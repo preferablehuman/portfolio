@@ -72,6 +72,25 @@ const pagePaths: Record<PageId, string> = {
   contact: "/contact",
 };
 
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+function withBasePath(path: string) {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${basePath}${normalizedPath}`;
+}
+
+function withoutBasePath(pathname: string) {
+  if (!basePath) {
+    return pathname;
+  }
+
+  if (pathname === basePath) {
+    return "/";
+  }
+
+  return pathname.startsWith(`${basePath}/`) ? pathname.slice(basePath.length) : pathname;
+}
+
 const navItems: Array<{ label: string; page: PageId; icon: typeof Mail }> = [
   { label: "Overview", page: "home", icon: ChartNoAxesCombined },
   { label: "About", page: "about", icon: UserRoundSearch },
@@ -99,7 +118,7 @@ const contactIcons: Record<string, typeof Mail> = {
 
 const contactItems: ContactItem[] = contacts;
 
-const resumePages = ["/resume-pages/resume-page-1.png"];
+const resumePages = [`${import.meta.env.BASE_URL}resume-pages/resume-page-1.png`];
 
 const categoryIcons: Record<string, typeof Mail> = {
   "Languages & Backend": SquareTerminal,
@@ -174,7 +193,7 @@ function buildPagePath(page: PageId, options?: NavigateOptions) {
   }
 
   const query = params.toString();
-  return `${pagePaths[page]}${query ? `?${query}` : ""}`;
+  return `${withBasePath(pagePaths[page])}${query ? `?${query}` : ""}`;
 }
 
 function searchFromPath(path: string) {
@@ -183,7 +202,8 @@ function searchFromPath(path: string) {
 }
 
 function pageFromPath(pathname: string): PageId {
-  const normalizedPath = pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
+  const appPath = withoutBasePath(pathname);
+  const normalizedPath = appPath.length > 1 ? appPath.replace(/\/$/, "") : appPath;
   const match = (Object.entries(pagePaths) as Array<[PageId, string]>).find(([, path]) => path === normalizedPath);
   return match?.[0] ?? "home";
 }
@@ -632,7 +652,7 @@ function RoutedLink({
 }) {
   return (
     <a
-      href={pagePaths[page]}
+      href={buildPagePath(page)}
       className={className}
       onClick={(event) => {
         event.preventDefault();

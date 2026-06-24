@@ -66,7 +66,7 @@ export const profile = {
   email: 'kunal.maheshwari.work@gmail.com',
   linkedin: 'https://www.linkedin.com/in/kunalmaheshwari26',
   github: 'https://github.com/preferablehuman',
-  resume: '/Kunal_Maheshwari_Resume.pdf',
+  resume: `${import.meta.env.BASE_URL}Kunal_Maheshwari_Resume.pdf`,
   summary:
     'Backend Software Engineer with 4.6+ years of experience building Java/Spring backend systems, REST/SOAP APIs, cloud-native integrations, distributed data pipelines, and privacy-oriented AI platforms across healthcare, automotive, AWS, and Azure environments.',
   positioning: [
