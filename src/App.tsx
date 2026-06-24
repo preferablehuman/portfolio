@@ -1129,7 +1129,8 @@ function ExperiencePage() {
         title="Experience"
       />
 
-      <div className="mt-8 space-y-4">
+      <div className="scroll-fade-y mt-8 max-h-[calc(100vh-12rem)] overflow-y-auto overscroll-contain px-1 py-8">
+        <div className="space-y-4">
         {experiences.map((role) => {
           const key = roleKey(role);
           const signals = experienceSignals(role);
@@ -1197,6 +1198,7 @@ function ExperiencePage() {
             </article>
           );
         })}
+        </div>
       </div>
     </section>
   );
@@ -1291,7 +1293,7 @@ function ProjectsPage() {
       <div className="mt-6 hidden min-h-0 flex-1 gap-6 lg:grid lg:grid-cols-[0.36fr_minmax(0,0.64fr)]">
         <div className="min-h-0">
           <div ref={projectRailRef} className="project-carousel h-full snap-y snap-mandatory overflow-y-auto overscroll-contain scroll-smooth pr-1">
-            <div className="space-y-3 py-4">
+            <div className="space-y-3 py-8">
               {featuredProjects.map((project) => (
                 <ProjectSummaryButton
                   key={project.id}
@@ -1307,7 +1309,7 @@ function ProjectsPage() {
           </div>
         </div>
 
-        <div className="project-detail-scroll min-h-0 overflow-y-auto overscroll-contain pr-1">
+        <div className="project-detail-scroll min-h-0 overflow-y-auto overscroll-contain px-1 py-6">
           <ProjectCaseStudy project={activeProject} activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
       </div>
@@ -1374,7 +1376,7 @@ function ProjectCaseStudy({
           </div>
         </div>
 
-        <div className="scroll-fade-x mt-5 flex gap-2 overflow-x-auto pb-1">
+        <div className="scroll-fade-x -mx-8 mt-5 flex gap-2 overflow-x-auto px-8 py-1">
           {projectTabs.map((tab) => (
             <button
               key={tab.id}
@@ -1651,7 +1653,7 @@ function SkillsPage({ selectedSkillSlug, onNavigate }: { selectedSkillSlug: stri
         </div>
       </div>
 
-      <div className="scroll-fade-x mt-6 flex gap-2 overflow-x-auto pb-2">
+      <div className="scroll-fade-x -mx-8 mt-6 flex gap-2 overflow-x-auto px-8 py-2">
         {categories.map((category) => (
           <button
             key={category}
@@ -1720,13 +1722,25 @@ function EducationPage() {
                 </div>
                 <p className="text-sm font-semibold text-neutral-500">{item.period}</p>
               </div>
+              {item.coursework?.length ? (
+                <div className="mt-5 rounded-lg border border-neutral-200 bg-[#f7f9f6] p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-700">Relevant coursework</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {item.coursework.map((course) => (
+                      <span key={course} className="rounded-md border border-neutral-200 bg-white px-3 py-1.5 text-xs font-semibold text-neutral-700 shadow-sm">
+                        {course}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
             </article>
           ))}
         </div>
 
         <div>
           <h2 className="text-xl font-semibold text-neutral-950">Certifications</h2>
-          <div className="scroll-fade-bottom mt-5 grid max-h-[420px] gap-3 overflow-y-auto pr-1">
+          <div className="scroll-fade-bottom mt-5 grid max-h-[440px] gap-3 overflow-y-auto pb-28 pt-2 pr-1">
             {certifications.map((certification) => {
               const CertificationIcon = iconForCertification(certification);
               return (
@@ -1770,7 +1784,7 @@ function ResumeModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
       {isOpen ? (
         <>
           <motion.div
-            className="resume-modal-backdrop scroll-fade-y fixed inset-0 z-[100] overflow-y-auto px-3 py-4 backdrop-blur-md"
+            className="resume-modal-backdrop scroll-fade-y fixed inset-0 z-[100] overflow-y-auto px-3 py-10 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -1912,7 +1926,7 @@ function ContactPage() {
             })}
             <a className="rounded-lg border border-white/10 bg-teal-300/10 p-4 text-sm font-semibold text-teal-100 transition hover:border-teal-200/60" href={profile.resume} download="Kunal_Maheshwari_Resume.pdf">
               <FileText className="mb-4" size={22} />
-              Download recruiter resume PDF
+              Download Resume
             </a>
           </div>
         </div>
