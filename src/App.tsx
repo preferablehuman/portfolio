@@ -1144,8 +1144,7 @@ function ExperiencePage() {
         title="Experience"
       />
 
-      <div className="scroll-fade-y mt-8 max-h-[calc(100vh-12rem)] overflow-y-auto overscroll-contain px-1 py-8">
-        <div className="space-y-4">
+      <div className="mt-8 space-y-4">
         {experiences.map((role) => {
           const key = roleKey(role);
           const signals = experienceSignals(role);
@@ -1213,7 +1212,6 @@ function ExperiencePage() {
             </article>
           );
         })}
-        </div>
       </div>
     </section>
   );
