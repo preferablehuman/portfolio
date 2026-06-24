@@ -9,7 +9,7 @@ Interactive recruiter-facing portfolio for Kunal Maheshwari, built with React, V
 - Skill search with focused evidence views and deep links such as `/skills?skill=java`
 - Dark/light mode toggle with persisted preference
 - Resume preview modal with direct download and PDF open fallback
-- Static deployment fallback through `public/_redirects`
+- GitHub Pages deep-link fallback through the generated `404.html`
 
 ## Local Development
 
@@ -28,16 +28,23 @@ npm.cmd run preview
 
 ## Deployment
 
-Recommended near-free deployment target: Cloudflare Pages.
+Active deployment target: GitHub Pages at
+`https://preferablehuman.github.io/portfolio/`.
 
-Use these settings:
+The deployment workflow builds the Vite application, uploads `dist`, adds the
+SPA fallback, and verifies that GitHub Pages is serving compiled assets rather
+than the repository's raw `src/main.tsx` entry point.
 
-- Framework preset: Vite
-- Build command: `npm run build`
-- Output directory: `dist`
-- Production branch: `main`
+Repository setting:
 
-The `public/_redirects` file keeps direct SPA routes such as `/about`, `/projects`, and `/skills?skill=java` working after deployment.
+- Settings → Pages → Build and deployment → Source: **GitHub Actions**
+
+The workflow copies the built `index.html` to `404.html`, which keeps direct
+SPA routes such as `/portfolio/about`, `/portfolio/projects`, and
+`/portfolio/skills?skill=java` working after deployment.
+
+Cloudflare files are parked under `deployment-archive/cloudflare/` with
+`.disabled` extensions. No Vercel deployment configuration is active.
 
 ## Content Notes
 
