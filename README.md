@@ -43,9 +43,6 @@ The workflow copies the built `index.html` to `404.html`, which keeps direct
 SPA routes such as `/portfolio/about`, `/portfolio/projects`, and
 `/portfolio/skills?skill=java` working after deployment.
 
-Cloudflare files are parked under `deployment-archive/cloudflare/` with
-`.disabled` extensions. No Vercel deployment configuration is active.
-
 ## Content Notes
 
 The portfolio content is curated from Kunal's resume, LinkedIn PDF export, GitHub repositories, and local project evidence. Project descriptions intentionally avoid unsupported claims about production usage, formal compliance, or sole ownership of team-wide work.
