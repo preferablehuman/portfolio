@@ -62,7 +62,7 @@ export const profile = {
   name: 'Kunal Maheshwari',
   title: 'Backend Software Engineer / Software Developer',
   location: 'Haldwani, Uttarakhand, India',
-  phone: '925844650',
+  phone: '9258446350',
   email: 'work.kunal.maheshwari@gmail.com',
   linkedin: 'https://www.linkedin.com/in/kunalmaheshwari26',
   github: 'https://github.com/preferablehuman',
