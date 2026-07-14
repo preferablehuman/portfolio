@@ -887,6 +887,13 @@ export const moreProjects: MoreProject[] = [
     href: 'https://github.com/preferablehuman/party-game',
   },
   {
+    title: '-codinghelper',
+    type: 'Practice',
+    description: 'Practice repository for coding helper experiments and project scaffolding.',
+    stack: ['JavaScript', 'Practice'],
+    href: 'https://github.com/preferablehuman/-codinghelper',
+  },
+  {
     title: 'Java Coding Practice',
     type: 'Practice',
     description: 'Java practice repository for core language and problem-solving exercises.',
