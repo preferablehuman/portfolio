@@ -230,6 +230,96 @@ export const featuredProjects: Project[] = [
     stack: ['React', 'Vite', 'TypeScript', 'Tailwind CSS', 'Motion for React', 'Lucide React', 'Custom SPA Routing', 'AI-assisted Development', 'Static Deployment'],
   },
   {
+    id: 'jobhunter',
+    title: 'JobHunter Job Automation Toolkit',
+    eyebrow: 'Practice project | Job search automation',
+    repo: 'https://github.com/preferablehuman/JobHunter',
+    summary:
+      'A job-search automation toolkit focused on CLI-driven notification flows, retry handling, and Gmail-based workflow support for tracking opportunities.',
+    tabs: {
+      overview: [
+        'Built as a practice automation project around the job-search workflow rather than a public-facing product.',
+        'Centers on notification handling, retry behavior, and Gmail workflow integration for inbox-driven task management.',
+        'Provides a compact example of scripting, automation design, and integration thinking across a lightweight developer utility.',
+      ],
+      architecture: [
+        'CLI entry points coordinate the job-search workflow and dispatch notifications or follow-up actions.',
+        'Gmail integration supports message handling for alerts and email-based task updates.',
+        'Retry logic keeps the automation flow resilient when an operation needs another attempt.',
+      ],
+      technical: [
+        'Structured the project around repeatable job-processing commands rather than one-off manual steps.',
+        'Used workflow-oriented automation patterns to keep state changes and notifications predictable.',
+        'Designed the integration points so email and command-line behavior stay separated from the core logic.',
+      ],
+      evidence: [
+        'GitHub repository name and workflow structure support the automation and Gmail-oriented description.',
+        'Scope is intentionally framed as a practice project, not as a production-scale applicant-tracking platform.',
+      ],
+    },
+    stack: ['Java', 'CLI', 'Gmail API', 'Automation'],
+  },
+  {
+    id: 'codinghelper',
+    title: 'Coding Helper Experiment',
+    eyebrow: 'Practice project | Project scaffolding',
+    repo: 'https://github.com/preferablehuman/-codinghelper',
+    summary:
+      'A lightweight coding-helper experiment used for scaffolding ideas, testing workflows, and exploring small developer-side automation patterns.',
+    tabs: {
+      overview: [
+        'Used as an experimental repository for coding-helper ideas and project scaffolding.',
+        'Represents lightweight practice work rather than a polished end-user application.',
+        'Fits the portfolio as a concise signal of experimentation and repo-based iteration.',
+      ],
+      architecture: [
+        'Repository scope is intentionally small and centered on helper workflows and scaffolding.',
+        'The project is positioned as a developer experiment rather than a multi-service system.',
+        'Any concrete implementation details should be read directly from the repository history and files.',
+      ],
+      technical: [
+        'Useful as evidence of quick experimentation, iterative setup, and lightweight code organization.',
+        'Keeps the description intentionally narrow because the repo is practice-oriented.',
+        'Avoids overstating scale or production readiness.',
+      ],
+      evidence: [
+        'Repository name and placement indicate practice usage rather than a major deployed project.',
+        'Framed conservatively because the current repo contents were not used to infer deeper implementation claims here.',
+      ],
+    },
+    stack: ['JavaScript', 'Automation', 'Practice'],
+  },
+  {
+    id: 'party-game',
+    title: 'Party Game',
+    eyebrow: 'Practice project | React UI experimentation',
+    repo: 'https://github.com/preferablehuman/party-game',
+    summary:
+      'A React/Vite interactive game scaffold used for frontend experimentation, lightweight UI patterns, and browser-based interaction work.',
+    tabs: {
+      overview: [
+        'Built as an interactive frontend experiment rather than a production game release.',
+        'Shows React and Vite usage for quick iteration on browser UI behavior and component structure.',
+        'Useful as a small but concrete signal of frontend practice and app scaffolding.',
+      ],
+      architecture: [
+        'React application structure keeps the UI modular and easy to extend.',
+        'Vite provides the fast local development loop for the project scaffold.',
+        'The project is best understood as a lightweight browser app rather than a larger platform.',
+      ],
+      technical: [
+        'Highlights React component composition and iterative UI work.',
+        'Uses the Vite toolchain to support rapid development and feedback.',
+        'Stayed intentionally minimal so the project remains a clean practice artifact.',
+      ],
+      evidence: [
+        'GitHub repository name and stack support a React/Vite practice-project framing.',
+        'Description is intentionally conservative because the repository appears to be a scaffold or experimentation target.',
+      ],
+    },
+    stack: ['React', 'Vite', 'TypeScript', 'Frontend Development'],
+  },
+  {
     id: 'nyu-taxi',
     title: 'NYU Taxi Data Analysis Platform',
     eyebrow: 'Big data | AWS + Spark pipeline',
@@ -852,13 +942,6 @@ export const moreProjects: MoreProject[] = [
     href: 'https://github.com/preferablehuman/OnlineWallet-repo',
   },
   {
-    title: 'JobHunter',
-    type: 'Practice',
-    description: 'Job search automation project with notification, retry, and Gmail workflow handling.',
-    stack: ['Java', 'Gmail API', 'CLI'],
-    href: 'https://github.com/preferablehuman/JobHunter',
-  },
-  {
     title: 'OnlineWallet Angular',
     type: 'Full-stack',
     description: 'Frontend repository for the wallet training application.',
@@ -885,13 +968,6 @@ export const moreProjects: MoreProject[] = [
     description: 'React/Vite app scaffold used for interactive UI experimentation.',
     stack: ['React', 'Vite'],
     href: 'https://github.com/preferablehuman/party-game',
-  },
-  {
-    title: '-codinghelper',
-    type: 'Practice',
-    description: 'Practice repository for coding helper experiments and project scaffolding.',
-    stack: ['JavaScript', 'Practice'],
-    href: 'https://github.com/preferablehuman/-codinghelper',
   },
   {
     title: 'Java Coding Practice',

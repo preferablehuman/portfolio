@@ -130,11 +130,14 @@ const categoryIcons: Record<string, typeof Mail> = {
 const projectIcons: Record<string, typeof Mail> = {
   "ai-email-client": BrainCircuit,
   "interactive-portfolio": Code2,
+  jobhunter: Workflow,
+  codinghelper: SquareTerminal,
   "nyu-taxi": DatabaseZap,
   lamprey: ScanSearch,
   "election-eda": ChartNoAxesCombined,
   "online-wallet": WalletCards,
   bookstore: BookOpenCheck,
+  "party-game": Layers3,
 };
 
 const companyMarks: Record<string, { label: string; colorClass: string }> = {
