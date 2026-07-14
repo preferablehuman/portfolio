@@ -852,6 +852,13 @@ export const moreProjects: MoreProject[] = [
     href: 'https://github.com/preferablehuman/OnlineWallet-repo',
   },
   {
+    title: 'JobHunter',
+    type: 'Practice',
+    description: 'Job search automation project with notification, retry, and Gmail workflow handling.',
+    stack: ['Java', 'Gmail API', 'CLI'],
+    href: 'https://github.com/preferablehuman/JobHunter',
+  },
+  {
     title: 'OnlineWallet Angular',
     type: 'Full-stack',
     description: 'Frontend repository for the wallet training application.',
